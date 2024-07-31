@@ -1,0 +1,46 @@
+Repositório do projeto:
+https://github.com/kenerry-serain/not-so-simple-ecommerce
+
+
+https://devopsnanuvem.internal:44300/main/health
+
+1 - Colocar o localstack para rodar.
+
+docker run --name nsse.localstack.internal --network nsse-network --rm -it -p 127.0.0.1:4566:4566 -p 127.0.0.1:4510-4559:4510-4559 -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack
+
+2 - Cria SQS no localstack
+
+aws --endpoint http:
+//localhost:4566  sqs create-queue --queue-name ProductStockQueue
+
+3.1 - Build de main
+docker build -f src/services/NotSoSimpleEcommerce.Main/Dockerfile -t nsse/main:1.0.0 .
+
+3 - Coloca a aplicação backend main para rodar.
+
+docker run --network nsse-network --env-file .env -p 8080:443 -v ./certificates/kestrel-certificate.pfx:/certificates/kestrel-certificate.pfx:ro -v /home/raphael/.aws/credentials:/nsse-backend/.aws/credentials:ro nsse/main:1.0.0
+
+4 - Build de Order
+docker build -f src/services/NotSoSimpleEcommerce.Order/Dockerfile -t nsse/order:1.0.0 .
+
+5 - Build de IdentityServer
+docker build -f src/services/NotSoSimpleEcommerce.IdentityServer/Dockerfile -t nsse/identity-server:1.0.0 .
+
+6 - Build de HealthChecker 
+docker build -f src/services/NotSoSimpleEcommerce.HealthChecker/Dockerfile -t nsse/health-checker:1.0.0 .
+
+7 - Build do InvoiceGenerator 
+docker build -f src/workers/NotSoSimpleEcommerce.InvoiceGenerator/Dockerfile -t nsse/invoice-generator:1.0.0 .
+
+8 - Build do Notificator 
+docker build -f src/workers/NotSoSimpleEcommerce.Notificator/Dockerfile -t nsse/notificator:1.0.0 .
+
+9 - Build do Front-end
+docker build -f src/frontend/Dockerfile -t nsse/frontend:1.0.0 src/frontend/      
+Para rodar o front-end: docker run -p 3000:80 nsse/frontend:1.0.0                      
+
+Adcionar o certificado root-ca para o navegador.
+https://support.kerioconnect.gfi.com/hc/en-us/articles/360015200119-Adding-Trusted-Root-Certificates-to-the-Server
+
+sudo ls -l /etc/ssl/certs | grep root-ca.crt
+
