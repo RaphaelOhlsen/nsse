@@ -30,7 +30,7 @@ services:
       - ${AWS_CREDENTIALS_HOST_PATH}:${AWS_CREDENTIALS_CONTAINER_PATH}
     networks:
       - nsse-network
-  
+
   nsse.order.internal:
    container_name: nsse.order.internal
    image: nsse/order
