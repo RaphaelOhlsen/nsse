@@ -1,0 +1,62 @@
+[04:25:41 INF] Request finished HTTP/1.1 GET http://nsse.identity.internal/identity/health - - - 200 - application/json 0.3131ms
+[04:25:43 INF] Request starting HTTP/1.0 POST https://devopsnanuvem.internal/identity/api/auth application/json 65
+[04:25:43 INF] Executing endpoint 'NotSoSimpleEcommerce.IdentityServer.Controllers.AuthController.AuthenticateAsync (NotSoSimpleEcommerce.IdentityServer)'
+[04:25:43 INF] Route matched with {action = "Authenticate", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AuthenticateAsync(Microsoft.Extensions.Configuration.IConfiguration, NotSoSimpleEcommerce.IdentityServer.Domain.Services.Contracts.IUserService, NotSoSimpleEcommerce.Shared.InOut.Requests.AuthRequest) on controller NotSoSimpleEcommerce.IdentityServer.Controllers.AuthController (NotSoSimpleEcommerce.IdentityServer).
+[04:25:44 INF] Executed action NotSoSimpleEcommerce.IdentityServer.Controllers.AuthController.AuthenticateAsync (NotSoSimpleEcommerce.IdentityServer) in 1101.4347ms
+[04:25:44 INF] Executed endpoint 'NotSoSimpleEcommerce.IdentityServer.Controllers.AuthController.AuthenticateAsync (NotSoSimpleEcommerce.IdentityServer)'
+[04:25:44 ERR] [Exception]: Autofac.Core.DependencyResolutionException: An exception was thrown while activating NotSoSimpleEcommerce.IdentityServer.Domain.Services.Implementations.UserService -> NotSoSimpleEcommerce.Repositories.Implementations.ReadEntityRepository`1[[NotSoSimpleEcommerce.IdentityServer.Domain.Models.UserEntity, NotSoSimpleEcommerce.IdentityServer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> λ:NotSoSimpleEcommerce.IdentityServer.Domain.Repositories.Contexts.IdentityServerContext.
+ ---> Npgsql.NpgsqlException (0x80004005): Failed to connect to 172.17.0.1:5432
+ ---> System.Net.Sockets.SocketException (111): Connection refused
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|215_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.UnpooledDataSource.Get(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|45_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlDatabaseCreator.Exists()
+   at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.Exists()
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.Migrate(String targetMigration)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate(DatabaseFacade databaseFacade)
+   at NotSoSimpleEcommerce.IdentityServer.Modules.InfrastructureModule.<Load>b__2_0(IComponentContext _) in /nsse-backend/src/services/NotSoSimpleEcommerce.IdentityServer/Modules/InfrastructureModule.cs:line 26
+   at Autofac.RegistrationExtensions.<>c__DisplayClass41_0`1.<Register>b__0(IComponentContext c, IEnumerable`1 p)
+   at Autofac.Builder.RegistrationBuilder.<>c__DisplayClass0_0`1.<ForDelegate>b__0(IComponentContext c, IEnumerable`1 p)
+   at Autofac.Core.Activators.Delegate.DelegateActivator.ActivateInstance(IComponentContext context, IEnumerable`1 parameters)
+   at Autofac.Core.Activators.Delegate.DelegateActivator.<ConfigurePipeline>b__2_0(ResolveRequestContext ctxt, Action`1 next)
+   at Autofac.Core.Resolving.Middleware.DisposalTrackingMiddleware.Execute(ResolveRequestContext context, Action`1 next)
+   at Autofac.Core.Resolving.Middleware.ActivatorErrorHandlingMiddleware.Execute(ResolveRequestContext context, Action`1 next)
+   --- End of inner exception stack trace ---
+   at Autofac.Core.Resolving.Middleware.ActivatorErrorHandlingMiddleware.Execute(ResolveRequestContext context, Action`1 next)
+   at Autofac.Core.Resolving.Middleware.SharingMiddleware.<>c__DisplayClass5_0.<Execute>b__0()
+   at Autofac.Core.Lifetime.LifetimeScope.CreateSharedInstance(Guid id, Func`1 creator)
+   at Autofac.Core.Lifetime.LifetimeScope.CreateSharedInstance(Guid primaryId, Nullable`1 qualifyingId, Func`1 creator)
+   at Autofac.Core.Resolving.Middleware.SharingMiddleware.Execute(ResolveRequestContext context, Action`1 next)
+   at Autofac.Core.Resolving.Middleware.CircularDependencyDetectorMiddleware.Execute(ResolveRequestContext context, Action`1 next)
+   at Autofac.Core.Resolving.ResolveOperation.GetOrCreateInstance(ISharingLifetimeScope currentOperationScope, ResolveRequest request)
+   at Autofac.Core.Resolving.ResolveOperation.ExecuteOperation(ResolveRequest request)
+   at Autofac.ResolutionExtensions.TryResolveService(IComponentContext context, Service service, IEnumerable`1 parameters, Object& instance)
+   at Autofac.ResolutionExtensions.ResolveService(IComponentContext context, Service service, IEnumerable`1 parameters)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinder.BindModelAsync(ModelBindingContext bindingContext)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.BindModelAsync(ActionContext actionContext, IModelBinder modelBinder, IValueProvider valueProvider, ParameterDescriptor parameter, ModelMetadata metadata, Object value, Object container)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerBinderDelegateProvider.<>c__DisplayClass0_0.<<CreateBinderDelegate>g__Bind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at NotSoSimpleEcommerce.IdentityServer.Middlewares.GlobalErrorHandlerMiddleware.InvokeAsync(HttpContext context, RequestDelegate next) in /nsse-backend/src/services/NotSoSimpleEcommerce.IdentityServer/Middlewares/GlobalErrorHandlerMiddleware.cs:line 29
+[04:25:44 INF] Request finished HTTP/1.0 POST https://devopsnanuvem.internal/identity/api/auth application/json 65 - 500 - application/json 1298.3235ms
+[04:25:45 INF] Request starting HTTP/2 GET https://localhost/identity/health - -
+[04:25:45 INF] Executing endpoint 'Health checks'
+[04:25:45 INF] Executed endpoint 'Health checks'
+[04:25:45 INF] Request finished HTTP/2 GET https://localhost/identity/health - - - 200 - application/json 0.4030ms
+[04:25:51 INF] Request starting HTTP/1.1 GET http://nsse.identity.internal/identity/health - -

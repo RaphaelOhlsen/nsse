@@ -62,6 +62,8 @@ services:
      - ${AWS_CREDENTIALS_HOST_PATH}:${AWS_CREDENTIALS_CONTAINER_PATH}
    networks:
      - nsse-network
+   extra_hosts:
+     - "host.docker.internal:host-gateway"
 
   nsse.health-checker.internal:
    container_name: nsse.health-checker.internal
